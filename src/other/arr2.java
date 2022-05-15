@@ -16,8 +16,8 @@ class Solution2 {
         System.out.println(num+" "+ Arrays.toString(arr));
     }
     public static int removeElement(int[] nums, int val) {
-        int j=0;
-        int i=0;
+        int j;
+        int i;
         int len=nums.length;
         for(i=0;i<len;i++){
             if(val==nums[i]){
