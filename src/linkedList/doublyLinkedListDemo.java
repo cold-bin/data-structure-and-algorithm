@@ -1,6 +1,6 @@
 package linkedList;
 
-public class doublyLinkedList {
+public class doublyLinkedListDemo {
     public static void main(String[] args) {
         heroNode1 h1 = new heroNode1(1, "刘海斌");
         heroNode1 h2 = new heroNode1(2, "包文杰");
