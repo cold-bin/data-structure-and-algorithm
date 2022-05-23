@@ -2,6 +2,10 @@ package stack;
 
 import java.util.Arrays;
 
+/*
+*   逆波兰计算器
+* */
+
 public class poLandNotation {
     public static void main(String[] args) {
         //先定义一个逆波兰表达式：（3+4）*5-6 -》34+5*6-
