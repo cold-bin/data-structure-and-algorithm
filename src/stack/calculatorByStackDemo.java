@@ -4,12 +4,13 @@ import java.util.Scanner;
 
 /*
 *   无括号版波兰计算器
+*   假设输入的字符串没有括号，且都是整型数字
 * */
 
 public class calculatorByStackDemo {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        System.out.print("请输入合法表达式：");//假设输入的数字只有一位数
+        System.out.print("请输入合法表达式：");
         String express = sc.next();
         char[] chars = express.toCharArray();
         //数字栈

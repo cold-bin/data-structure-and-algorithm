@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 /*
 *   逆波兰计算器
+*   假设输入的字符串没有括号，且都是整型数字
 * */
 
 public class poLandNotation {
