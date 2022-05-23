@@ -9,7 +9,7 @@ import java.util.Arrays;
 
 public class poLandNotation {
     public static void main(String[] args) {
-        //先定义一个逆波兰表达式：（3+4）*5-6 -》34+5*6-
+        //先定义一个逆波兰表达式：（30+4）*5-6 -》30 4 + 5 * 6 -
         //
         String suffixExpression="30 4 + 5 * 6 -";
         char[] chs=suffixExpression.toCharArray();
