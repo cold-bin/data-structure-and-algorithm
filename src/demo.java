@@ -1,6 +1,8 @@
+/*
+*   测试环形队列
+* */
 public class demo {
     public static void main(String[] args) {
-
         int maxSize = 10;
         int front = 1;
         int rear = 7;

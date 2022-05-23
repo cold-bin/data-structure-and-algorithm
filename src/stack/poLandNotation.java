@@ -10,7 +10,8 @@ import java.util.Arrays;
 public class poLandNotation {
     public static void main(String[] args) {
         //先定义一个逆波兰表达式：（3+4）*5-6 -》34+5*6-
-        String suffixExpression="3 4 + 5 * 6 -";
+        //
+        String suffixExpression="30 4 + 5 * 6 -";
         char[] chs=suffixExpression.toCharArray();
         stackNumber stackNumber=new stackNumber(10);
         String number ="";//数字拼接
@@ -20,13 +21,17 @@ public class poLandNotation {
         for (int i = 0; i < chs.length;i++) {
             //扫描数字
             while (!isSpace(chs[i])){
-                if (isDigital(chs[i])) number+=chs[i++];
-                //如果是下一个字符为操作符，跳出循环
-                else if (isOpr(chs[i])) break;
-                //有数字则入栈
-                if (number!=""){
-                    stackNumber.push(Integer.parseInt(number));
+                if (isDigital(chs[i])) {
+                    //数字追加
+                    number+=chs[i];
+                    i++;
+                }else if (isOpr(chs[i])) {
+                    //扫描到操作符，就退出循环，避免死循环
+                    break;
                 }
+            }
+            if (number!=""){
+                stackNumber.push(Integer.parseInt(number));
             }
             //扫描字符串
             if (!isSpace(chs[i])){
@@ -92,7 +97,6 @@ class stackNumber{
     public void showBottom(){
         System.out.println(arr[0]);
     }
-
     //计算方法
     public int calculate(int num1,int num2,char opr){
         switch (opr){
