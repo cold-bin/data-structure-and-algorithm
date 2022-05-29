@@ -10,6 +10,7 @@ public class shellSort {
         shellSortBySwap(arr);
         System.out.println("交换法排序后：" + Arrays.toString(arr));
         arr = new int[]{1, 2, 1, 5, 4, 6, 4, 1};
+//        arr=new int[]{2,1};
         shellSortByMove(arr);
         System.out.println("移位法排序后：" + Arrays.toString(arr));
     }
