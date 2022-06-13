@@ -35,6 +35,21 @@ public class binaryTree {
         System.out.println("中序遍历：");
         treeManager.infixShow();
 
+        System.out.println("5编号节点信息：");
+        System.out.println("前序序查找，");
+        System.out.println(treeManager.preSearch(3));
+        System.out.println("中序查找：");
+        System.out.println(treeManager.infixSearch(3));
+        System.out.println("后序查找：");
+        System.out.println(treeManager.postSearch(3));
+
+        System.out.println("删除节点2");
+        System.out.println(treeManager.delete(2));
+        treeManager.preShow();
+        System.out.println();
+        System.out.println("删除节点3及其子树");
+        System.out.println(treeManager.delete(3));
+        treeManager.preShow();
     }
 }
 
@@ -77,6 +92,39 @@ class treeManager {
         }
         root.postShow();
     }
+
+    public treeNode preSearch(int no) {
+        if (isEmpty()) {
+            System.out.println("树为空");
+            return null;
+        }
+        return root.preSearch(no);
+    }
+
+    public treeNode infixSearch(int no) {
+        if (isEmpty()) {
+            System.out.println("树为空");
+            return null;
+        }
+        return root.infixSearch(no);
+    }
+
+    public treeNode postSearch(int no) {
+        if (isEmpty()) {
+            System.out.println("树为空");
+            return null;
+        }
+        return root.postSearch(no);
+    }
+
+    //删除
+    public boolean delete(int no) {
+        if (isEmpty()) {
+            System.out.println("树为空");
+            return false;
+        }
+        return root.delete(no);
+    }
 }
 
 class treeNode {
@@ -98,8 +146,8 @@ class treeNode {
                 ", name='" + name + '\'' +
                 '}';
     }
-    //前序遍历
 
+    //添加指定节点
     public void add(treeNode node) {
         if (this.no == 3) {
             this.leftChildNode = node;
@@ -112,6 +160,7 @@ class treeNode {
         }
     }
 
+    //前序遍历
     public void preShow() {
 
         System.out.println(this);
@@ -144,4 +193,91 @@ class treeNode {
         }
         System.out.println(this);
     }
+
+    //前序查找
+    public treeNode preSearch(int no) {
+        System.out.println("当前调用本函数");
+        //如果当前节点满足，则返回当前节点
+        if (this.no == no) {
+            return this;
+        }
+        treeNode node = null;
+        //再向左子树递归
+        if (this.leftChildNode != null) {
+            node = this.leftChildNode.preSearch(no);
+        }
+        //先校验左子树递归结果，不然会被右子树的结果给覆盖掉
+        if (node != null) {
+            return node;
+        }
+        //再向右子树递归
+        if (this.rightChildNode != null) {
+            node = this.rightChildNode.preSearch(no);
+        }
+        return node;
+    }
+
+    //中序查找
+    public treeNode infixSearch(int no) {
+        System.out.println("调用本函数");
+        treeNode node = null;
+
+        if (this.leftChildNode != null) {
+            node = this.leftChildNode.infixSearch(no);
+        }
+        if (this.no == no) {
+            return this;
+        }
+        //如果已找到提前返回
+        if (node != null) {
+            return node;
+        }
+        if (this.rightChildNode != null) {
+            node = this.rightChildNode.infixSearch(no);
+        }
+        return node;
+    }
+
+    //后续查找
+    public treeNode postSearch(int no) {
+        System.out.println("调用本函数");
+        treeNode node = null;
+        if (this.leftChildNode != null) {
+            node = this.leftChildNode.postSearch(no);
+        }
+        //左子节点找到要返回，否则会被右子节点覆盖掉
+        if (node != null) {
+            return node;
+        }
+        if (this.rightChildNode != null) {
+            node = this.rightChildNode.postSearch(no);
+        }
+        if (this.no == no) {
+            return this;
+        }
+        return node;
+    }
+
+    public boolean delete(int no) {
+        boolean res = false;
+        //左子节点不为空，删除该节点及其子树
+        if (this.leftChildNode != null && this.leftChildNode.no == no) {
+            this.leftChildNode = null;
+            return true;
+        }
+        //右子节点不为空，删除该节点及其子树
+        if (this.rightChildNode != null && this.rightChildNode.no == no) {
+            this.rightChildNode = null;
+            return true;
+        }
+        //如果没有找到，继续递归
+        if (this.leftChildNode != null) {
+            res = this.leftChildNode.delete(no);
+        }
+        if (this.rightChildNode != null) {
+            res = this.rightChildNode.delete(no);
+        }
+        return res;
+    }
+
 }
