@@ -262,12 +262,32 @@ class treeNode {
         boolean res = false;
         //左子节点不为空，删除该节点及其子树
         if (this.leftChildNode != null && this.leftChildNode.no == no) {
-            this.leftChildNode = null;
+            if (this.leftChildNode.leftChildNode==null&&this.leftChildNode.rightChildNode==null) {
+                //叶子节点直接删除
+                this.leftChildNode = null;
+            }else if (this.leftChildNode.leftChildNode!=null&&this.leftChildNode.rightChildNode==null){
+                //非叶子节点，只删除该节点其他节点按照规则存在
+                this.leftChildNode=this.leftChildNode.leftChildNode;
+            }else if (this.leftChildNode.leftChildNode==null&&this.leftChildNode.rightChildNode!=null){
+                this.leftChildNode=this.leftChildNode.rightChildNode;
+            }else if (this.leftChildNode.leftChildNode!=null&&this.leftChildNode.rightChildNode!=null){
+                this.leftChildNode=this.leftChildNode.leftChildNode;
+            }
             return true;
         }
         //右子节点不为空，删除该节点及其子树
         if (this.rightChildNode != null && this.rightChildNode.no == no) {
-            this.rightChildNode = null;
+            if (this.rightChildNode.leftChildNode==null&&this.rightChildNode.rightChildNode==null) {
+                //叶子节点直接删除
+                this.rightChildNode = null;
+            }else if (this.rightChildNode.leftChildNode!=null){
+                System.out.println("aaa");
+                //非叶子节点，只删除该节点其他节点按照规则存在
+                this.rightChildNode=this.rightChildNode.leftChildNode;
+            }else if (this.rightChildNode.rightChildNode!=null&&this.rightChildNode.leftChildNode==null){
+                System.out.println("sss");
+                this.rightChildNode=this.rightChildNode.rightChildNode;
+            }
             return true;
         }
         //如果没有找到，继续递归
