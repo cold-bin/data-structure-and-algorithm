@@ -37,11 +37,11 @@ public class binaryTree {
 
         System.out.println("5编号节点信息：");
         System.out.println("前序序查找，");
-        System.out.println(treeManager.preSearch(3));
+        System.out.println(treeManager.preSearch(5));
         System.out.println("中序查找：");
-        System.out.println(treeManager.infixSearch(3));
+        System.out.println(treeManager.infixSearch(5));
         System.out.println("后序查找：");
-        System.out.println(treeManager.postSearch(3));
+        System.out.println(treeManager.postSearch(5));
 
         System.out.println("删除节点2");
         System.out.println(treeManager.delete(2));
@@ -123,8 +123,15 @@ class treeManager {
             System.out.println("树为空");
             return false;
         }
+        //如果只有root根节点，则直接删除
+        if (root.leftChildNode==null&& root.rightChildNode==null&&root.no==no){
+            root=null;
+            return true;
+        }
         return root.delete(no);
     }
+
+
 }
 
 class treeNode {
@@ -196,7 +203,7 @@ class treeNode {
 
     //前序查找
     public treeNode preSearch(int no) {
-        System.out.println("当前调用本函数");
+        System.out.println("进入前序查找");
         //如果当前节点满足，则返回当前节点
         if (this.no == no) {
             return this;
@@ -219,19 +226,20 @@ class treeNode {
 
     //中序查找
     public treeNode infixSearch(int no) {
-        System.out.println("调用本函数");
         treeNode node = null;
 
         if (this.leftChildNode != null) {
             node = this.leftChildNode.infixSearch(no);
         }
-        if (this.no == no) {
-            return this;
-        }
         //如果已找到提前返回
         if (node != null) {
             return node;
         }
+        System.out.println("进入中序查找");
+        if (this.no == no) {
+            return this;
+        }
+
         if (this.rightChildNode != null) {
             node = this.rightChildNode.infixSearch(no);
         }
@@ -240,7 +248,6 @@ class treeNode {
 
     //后续查找
     public treeNode postSearch(int no) {
-        System.out.println("调用本函数");
         treeNode node = null;
         if (this.leftChildNode != null) {
             node = this.leftChildNode.postSearch(no);
@@ -249,55 +256,94 @@ class treeNode {
         if (node != null) {
             return node;
         }
+
         if (this.rightChildNode != null) {
             node = this.rightChildNode.postSearch(no);
         }
+        //右子节点不为空，需要提前返回
+        if (node != null) {
+            return node;
+        }
+
+        System.out.println("进入后续查找");
         if (this.no == no) {
             return this;
         }
-        return node;
+        return null;
     }
 
+    //删除节点或节点及其子树
     public boolean delete(int no) {
-        boolean res = false;
-        //左子节点不为空，删除该节点及其子树
-        if (this.leftChildNode != null && this.leftChildNode.no == no) {
-            if (this.leftChildNode.leftChildNode==null&&this.leftChildNode.rightChildNode==null) {
-                //叶子节点直接删除
-                this.leftChildNode = null;
-            }else if (this.leftChildNode.leftChildNode!=null&&this.leftChildNode.rightChildNode==null){
-                //非叶子节点，只删除该节点其他节点按照规则存在
-                this.leftChildNode=this.leftChildNode.leftChildNode;
-            }else if (this.leftChildNode.leftChildNode==null&&this.leftChildNode.rightChildNode!=null){
-                this.leftChildNode=this.leftChildNode.rightChildNode;
-            }else if (this.leftChildNode.leftChildNode!=null&&this.leftChildNode.rightChildNode!=null){
-                this.leftChildNode=this.leftChildNode.leftChildNode;
-            }
+        boolean res =false;
+        //
+        if (this.leftChildNode!=null&&this.leftChildNode.no==no){
+            this.leftChildNode=null;
             return true;
         }
-        //右子节点不为空，删除该节点及其子树
-        if (this.rightChildNode != null && this.rightChildNode.no == no) {
-            if (this.rightChildNode.leftChildNode==null&&this.rightChildNode.rightChildNode==null) {
-                //叶子节点直接删除
-                this.rightChildNode = null;
-            }else if (this.rightChildNode.leftChildNode!=null){
-                System.out.println("aaa");
-                //非叶子节点，只删除该节点其他节点按照规则存在
-                this.rightChildNode=this.rightChildNode.leftChildNode;
-            }else if (this.rightChildNode.rightChildNode!=null&&this.rightChildNode.leftChildNode==null){
-                System.out.println("sss");
-                this.rightChildNode=this.rightChildNode.rightChildNode;
-            }
+        if (this.rightChildNode!=null&&this.rightChildNode.no==no){
+            this.rightChildNode=null;
             return true;
         }
-        //如果没有找到，继续递归
-        if (this.leftChildNode != null) {
-            res = this.leftChildNode.delete(no);
+        if (this.leftChildNode!=null){
+            res=this.leftChildNode.delete(no);
         }
-        if (this.rightChildNode != null) {
-            res = this.rightChildNode.delete(no);
+        //提前返回结果，避免左子树覆盖
+        if (res){
+            return true;
+        }
+        if (this.rightChildNode!=null){
+            res=this.rightChildNode.delete(no);
         }
         return res;
     }
 
+    //只删除节点，不删除子树
+    public boolean delete2(int no) {
+        boolean res =false;
+        if (this.leftChildNode!=null&&this.leftChildNode.no==no){
+            //判断删除节点是否含有子树
+            if (this.leftChildNode.leftChildNode==null&&this.leftChildNode.rightChildNode==null){
+                //无子树，删除当前节点
+                this.leftChildNode=null;
+            } else if (this.leftChildNode.leftChildNode!=null&&this.leftChildNode.rightChildNode==null) {
+                //有左子树，无右子树，左子树代替删除节点
+                this.leftChildNode=this.leftChildNode.leftChildNode;
+            } else if (this.leftChildNode.leftChildNode == null && this.leftChildNode.rightChildNode != null) {
+                //无左子树，有右子树，右子树代替删除节点
+                this.leftChildNode=this.leftChildNode.rightChildNode;
+            }else {
+                //左右子树都有，左子树节点代替删除节点
+                this.leftChildNode=this.leftChildNode.leftChildNode;
+            }
+            return true;
+        }
+        if (this.rightChildNode!=null&&this.rightChildNode.no==no){
+            //判断删除节点是否含有子树
+            if (this.rightChildNode.leftChildNode==null&&this.rightChildNode.rightChildNode==null){
+                //无子树，删除当前节点
+                this.rightChildNode=null;
+            } else if (this.rightChildNode.leftChildNode!=null&&this.rightChildNode.rightChildNode==null) {
+                //有左子树，无右子树，左子树代替删除节点
+                this.rightChildNode=this.rightChildNode.leftChildNode;
+            } else if (this.rightChildNode.leftChildNode == null && this.rightChildNode.rightChildNode != null) {
+                //无左子树，有右子树，右子树代替删除节点
+                this.rightChildNode=this.rightChildNode.rightChildNode;
+            }else {
+                //左右子树都有，左子树节点代替删除节点
+                this.rightChildNode=this.rightChildNode.leftChildNode;
+            }
+            return true;
+        }
+        if (this.leftChildNode!=null){
+            res=this.leftChildNode.delete(no);
+        }
+        //提前返回结果，避免左子树覆盖
+        if (res){
+            return true;
+        }
+        if (this.rightChildNode!=null){
+            res=this.rightChildNode.delete(no);
+        }
+        return res;
+    }
 }
