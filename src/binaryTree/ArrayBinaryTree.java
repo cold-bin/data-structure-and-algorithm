@@ -1,5 +1,7 @@
 package binaryTree;
-
+/*
+* 顺序存储二叉树（前序、中序、后序方式）
+* */
 public class ArrayBinaryTree {
     public static void main(String[] args) {
         int[] arr = {1, 2, 3, 4, 5, 6, 7};//将数组看作是二叉树进行遍历，角标与对应二叉树有一个数学关系
