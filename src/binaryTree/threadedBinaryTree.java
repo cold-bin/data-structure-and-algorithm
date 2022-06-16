@@ -15,6 +15,13 @@ public class threadedBinaryTree {
         n2.rightChildNode = n5;
         n3.leftChildNode = n6;
 
+        //记录父节点
+        n2.parentNode = n1;
+        n3.parentNode = n1;
+        n4.parentNode = n2;
+        n5.parentNode = n2;
+        n6.parentNode = n3;
+
         System.out.println("前序遍历:");
         treeManager.preShow();
 
@@ -34,7 +41,7 @@ public class threadedBinaryTree {
         tdBinaryTree.preThreadOrder(n1);
         System.out.println("前序线索化遍历：");
         tdBinaryTree.preThreadList(n1);
-//
+
 //        tdBinaryTree.postThreadOrder(n1);
 //        System.out.println("后序线索化遍历：");
 //        tdBinaryTree.postThreadList(n1);
@@ -70,13 +77,20 @@ class threadedTree {
         treeNode1 node = root;
         if (node == null) return;
 
-        while (node!=null){
-            //先找到根节点为开始
-            while (node.leftTag == 0) {//没有前驱节点,找到头节点
+        while (node != null) {
+            //一直沿左子树遍历，直到遇到线索
+            while (node.leftTag == 0) {
                 System.out.println(node);
-                node = node.leftChildNode;//将节点指向左子节点
+                node = node.leftChildNode;
             }
             System.out.println(node);
+            //此时已遍历一颗子树的根节点和左子树
+            //再遍历其后继节点
+            while (node.rightTag==1) {
+                node = node.rightChildNode;
+                System.out.println(node);
+            }
+            //遇到当前节点无线索时，表示此时的节点有左右子树，左边已经遍历，该遍历右子树
             node=node.rightChildNode;
         }
     }
@@ -143,20 +157,31 @@ class threadedTree {
     public void postThreadList(treeNode1 root) {
         treeNode1 node = root;
         if (node == null) return;
-        while (node != null) {
-            //找到头节点
-            while (node.leftTag == 0) {
-                node = node.leftChildNode;
-            }
-            //输出当前节点
-            System.out.println(node);
+        //遍历找到最左子节点，从此处开始遍历
+        while (node != null && node.leftTag == 0) node = node.leftChildNode;
+        //暂存上一个节点
+        treeNode1 preNode = null;
 
-            //根据头节点，不断遍历后继节点
+        while (node != null) {
+            //找到后序遍历输出的头节点时，不断输出后继节点
             while (node.rightTag == 1) {
-                node = node.rightChildNode;
                 System.out.println(node);
+                preNode = node;//记录上一个遍历的节点
+                node = node.rightChildNode;
             }
-            node = preNode.rightChildNode;
+            //如果上一个处理的节点当前节点的右子节点，则说明左右子树处理完毕，继续处理父节点
+            while (node.rightChildNode == preNode) {
+                System.out.println(node);
+                if (node.parentNode == null) return;
+                preNode = node;
+                node = node.parentNode;
+            }
+            //如果上一个处理的节点是当前节点的左子节点
+            if (node.leftChildNode == preNode) {
+                //找到右子树的最左子节点
+                node = node.rightChildNode;
+                while (node != null && node.leftTag == 0) node = node.leftChildNode;
+            }
         }
     }
 }
@@ -250,6 +275,8 @@ class treeNode1 {
     int rightTag;//当为0，表示右子树不为空，为1时右子树为空，应该指向后继节点
     treeNode1 leftChildNode;
     treeNode1 rightChildNode;
+
+    treeNode1 parentNode;//记录此时节点的父节点（用于遍历后序线索化二叉树。只有知道当前节点的父节点才能进行）
 
     public treeNode1(int no, String name) {
         this.no = no;
