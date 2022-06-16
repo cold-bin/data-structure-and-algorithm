@@ -86,12 +86,12 @@ class threadedTree {
             System.out.println(node);
             //此时已遍历一颗子树的根节点和左子树
             //再遍历其后继节点
-            while (node.rightTag==1) {
+            while (node.rightTag == 1) {
                 node = node.rightChildNode;
                 System.out.println(node);
             }
             //遇到当前节点无线索时，表示此时的节点有左右子树，左边已经遍历，该遍历右子树
-            node=node.rightChildNode;
+            node = node.rightChildNode;
         }
     }
 
