@@ -3,7 +3,46 @@
 * */
 public class demo {
     public static void main(String[] args) {
-        qSort(new int[]{1, 2, 1, 5, 4, 6, 4, 1},0,7);
+//        qSort(new int[]{1, 2, 1, 5, 4, 6, 4, 1},0,7);
+//        System.out.println((byte) Integer.parseInt("11111100", 2));
+//        System.out.println( Integer.toBinaryString(-4));
+//
+//        System.out.println();
+//
+//        System.out.println((byte) Integer.parseInt("00000100", 2));
+//        System.out.println( Integer.toBinaryString(4));
+        System.out.println(bytesToBitString(true,(byte)28));
+    }
+
+    public static String bytesToBitString(boolean flag,byte b){
+        //转化为int
+        int temp=b;
+        StringBuilder prefix= new StringBuilder();//用于正数前缀补零
+        String str=Integer.toBinaryString(temp);
+        int len=str.length();
+        if (flag){//如果是最后一位，可能会少于8位，前面记录在LastLength全局变量里
+            //如果是正数，需要补高位，补足LastLength位
+            if (b>=0){
+                while (len<8){
+                    prefix.append('0');
+                    len++;
+                }
+                return prefix+str;
+            }else {//如果是负数，就需要只保留后8位
+                return str.substring(str.length()-8);
+            }
+        }else {//不是最后一位，一定是满8位
+            //如果是正数，需要补高位补足8位
+            if (b>=0){
+                while (len<8){
+                    prefix.append('0');
+                    len++;
+                }
+                return prefix+str;
+            }else {//如果是负数，就需要只保留后8位
+                return str.substring(str.length()-8);
+            }
+        }
     }
 
     public static void qSort(int[] arr,int left,int right){
