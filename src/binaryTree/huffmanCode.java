@@ -90,7 +90,6 @@ public class huffmanCode {
         }
     }
 
-
     //将原始字符串的bytes数据编码并压缩，返回压缩结果
     public static byte[] huffmanZip(byte[] bytes) {
         //根据原始数据生成哈夫曼编码树
