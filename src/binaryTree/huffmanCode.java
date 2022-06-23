@@ -7,7 +7,7 @@ public class huffmanCode {
     static int LastLength = -1;//记录最后一个数压缩的长度，方便解压正确
 
     public static void main(String[] args) {
-        String text = "i like like like java do you like a java -asasda 1 0 -1";
+        String text = "i like like like java do you like a java -asasda";
         System.out.println("字符串长度：" + text.length());
         //转化为字符数组
         byte[] chs = text.getBytes();
