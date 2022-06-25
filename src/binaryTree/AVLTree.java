@@ -10,7 +10,7 @@ public class AVLTree {
 //        int[] arr = {4, 3, 6, 5, 7, 8};//rr：处理方式左旋转
 //        int[] arr = {10, 12, 8, 9, 7, 6};//ll：处理方式右旋转
 //        int[] arr = {10, 11, 7, 6, 8, 9};//lr：处理方式先左旋再右旋
-        int[] arr = {2,1,6,5,7,3};//rl：处理方式先右旋再左旋
+        int[] arr = {2, 1, 6, 5, 7, 3};//rl：处理方式先右旋再左旋
 
         AVLTreeManager manager = new AVLTreeManager();
         for (int val : arr) {
