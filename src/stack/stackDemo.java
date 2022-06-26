@@ -7,13 +7,19 @@ public class stackDemo {
         m.push(new node(2));
         m.push(new node(3));
         m.list();
+        System.out.println("ss"+m.top);
         System.out.println(m.pop());
+        System.out.println("ss"+m.top);
         System.out.println(m.pop());
+        System.out.println("ss"+m.top);
         m.list();
         System.out.println(m.pop());
+        System.out.println("ss"+m.top);
         m.push(new node(4));
+        System.out.println("ss"+m.top);
         m.list();
         System.out.println(m.pop());
+        System.out.println("ss"+m.top);
     }
     //入栈
 }
