@@ -112,7 +112,7 @@ public class graph {
         while (w != -1) {
             if (!isVisited[w]) {//且未被访问，就递归访问
                 DFS(isVisited, w);
-            } else {//已被访问
+            } else {//已被访问，访问它的下一个邻接结点（往深处走）
                 w = getNextNeighbor(i, w);
             }
         }
