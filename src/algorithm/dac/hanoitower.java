@@ -1,5 +1,7 @@
 package algorithm.dac;
-
+/*
+* 汉诺塔
+* */
 public class hanoitower {
     public static void main(String[] args) {
         move(5, 'A', 'B', 'C');
@@ -18,5 +20,6 @@ public class hanoitower {
 //        move(1,a,b,c);
         //再把b塔所有盘，从b移动至c，借助a塔
         move(num - 1, b, a, c);
+
     }
 }
