@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /*
 *   测试
 * */
@@ -12,6 +14,12 @@ public class demo {
 //        System.out.println((byte) Integer.parseInt("00000100", 2));
 //        System.out.println( Integer.toBinaryString(4));
         System.out.println(bytesToBitString(true,(byte)28));
+
+        ArrayList<String> list =new ArrayList<>();
+        list.add("ss");
+        for (String s : list) {
+            System.out.println(s);
+        }
     }
 
     public static String bytesToBitString(boolean flag,byte b){
