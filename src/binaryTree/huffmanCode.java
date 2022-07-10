@@ -7,13 +7,23 @@ public class huffmanCode {
     static int LastLength = -1;//记录最后一个数压缩的长度，方便解压正确
 
     public static void main(String[] args) {
-        String text = "i like like like java do you like a java -asasda";
+//        String text = "i like like like java do you like a java -asasda";
+        String text = "不苦不累，高三无味。不拼不搏，等于白活。\n" +
+                "\n" +
+                "就算拼个头PX流，也要跟俺冲进一本的大楼！\n" +
+                "\n" +
+                "考过高富帅，胜过富二代。\n" +
+                "\n" +
+                "要成功，先发疯。\n" +
+                "\n" +
+                "下定决心往前冲，高考加油！！！";
         System.out.println("字符串长度：" + text.length());
+        System.out.println("原数据");
         //转化为字符数组
         byte[] chs = text.getBytes();
-        System.out.println(Arrays.toString(huffmanZip(chs)));
+        System.out.println("压缩数据："+Arrays.toString(huffmanZip(chs)));
 
-        System.out.println(new String(decode(CodeTable, huffmanZip(chs))));
+        System.out.println("解压数据："+new String(decode(CodeTable, huffmanZip(chs))));
     }
 
     public static byte[] decode(Map<Byte, String> huffmanCodeTable, byte[] huffmanBytes) {
