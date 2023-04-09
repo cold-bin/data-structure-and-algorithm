@@ -4,12 +4,12 @@ import java.util.Arrays;
 
 public class kmp {
     public static void main(String[] args) {
-        String str1 = "BBC ABCDAB ABCDABCDABDE";
+        String str1 = "abab";
         String str2 = "ABCDABD";
 //        String str2 = "ABCDABDABCE";
 //        String str2 = "agctagcagctagct";
 //        System.out.println(Arrays.toString(kmpNext(str2)));
-        System.out.println("第一次出现的位置：" + kmpSearch(str1, str2, kmpNext(str2)));
+//        System.out.println("第一次出现的位置：" + kmpSearch(str1, str2, kmpNext(str2)));
     }
 
     //kmp搜索

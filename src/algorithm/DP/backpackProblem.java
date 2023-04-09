@@ -3,51 +3,32 @@ package algorithm.DP;
 import java.util.Arrays;
 
 /*
- * 01背包问题
+ * 01背包问题：
+ *  有n件物品和一个最多能背重量为w 的背包。
+ *  第i件物品的重量是weight[i]，得到的价值是value[i] 。每件物品只能用一次，求解将哪些物品装入背包里物品价值总和最大。
  * */
 public class backpackProblem {
     public static void main(String[] args) {
-        //创建表
-        int[][] v = new int[4][5];//前i个物品中能够装入容量为j的背包中的最大价值
-        int[] w = new int[4];//第i个物品重量
-        w[1] = 1;
-        w[2] = 4;
-        w[3] = 3;
-        int[] a = new int[4];//物品第i个物品单价
-        a[1] = 1500;
-        a[2] = 3000;
-        a[3] = 2000;
+        int[] v = new int[]{10, 15, 20, 25};// 第i个物品的价值
+        int[] w = new int[]{3, 6, 4, 5};    // 第i个物品的重量
+        int bag = 10;                       // 背包的容量
 
-        //开始决策填表
+        // 状态表示：dp[i][j]表示当前背包装有前i个物品，j重量的物品的最大价值（i、j从1开始）
+        int[][] dp = new int[5][bag+1];
+        // 状态初始化: 取第0个物品时，能够装下背包容量大于第0个物品重量的价值为0
+        // 所以已经初始化完毕
 
-        //填充第一列
-        int rowNum = v.length;
-        for (int i = 0; i < rowNum; i++) {
-            v[i][0] = 0;
-        }
-        //填充第一行
-        int colNum = v[0].length;
-        for (int j = 0; j < colNum; j++) {
-            v[0][j] = 0;
-        }
-        //填充第二行：只能放第一个商品
-        for (int j = 0; j < colNum; j++) {
-            if (w[1] <= j) v[1][j] = a[1];
-        }
-        //决策其他单元格
-        for (int i = 2; i < rowNum; i++) {
-            for (int j = 1; j < colNum; j++) {
-                //当前物品放不下，只有依赖上次决策的结果
-                if (w[i] > j) v[i][j] = v[i - 1][j];
-
-                //当前物品放得下，需要比较将当前物品放入之后再填放以前物品的加之和不放当前物品的价值
-                else v[i][j] = Math.max(v[i - 1][j], a[i] + v[i - 1][j - w[i]]);
+        // 状态转移
+        for (int i = 1; i < dp.length; i++) {
+            for (int j = 1; j < dp[i].length; j++) {
+                // 当j<w[i]时，就表明当前背包容量小，无法放入这个物品，那么只能去找美方这个物品前的最大价值
+                if (j < w[i-1]) dp[i][j] = dp[i - 1][j];
+                    // 当j>=w[i]时，表明当前背包可以是j-w[i]容量背包装了w[i]的物品转移而来，那么价值选择放这个物品和不放这个物品的最大价值
+                else dp[i][j] = Math.max(dp[i - 1][j], dp[i - 1][j - w[i-1]] + v[i-1]);
             }
         }
 
-        for (int[] ints : v) {
-            System.out.println(Arrays.toString(ints));
-            System.out.println();
-        }
+        System.out.println("状态dp：" + Arrays.deepToString(dp));
+        System.out.println("最大价值：" + dp[4][10]);
     }
 }
