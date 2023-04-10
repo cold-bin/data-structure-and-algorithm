@@ -2,58 +2,22 @@ package algorithm.DP;
 
 public class standard_back_pack {
     public static void main(String[] args) {
-        int[] weight = {3, 6, 4, 5};
-        int[] value = {10, 15, 20, 25};
-        int bagSize = 10;
-        testWeightBagProblem(weight,value,bagSize);
-    }
+        int[] v = new int[]{15, 20, 30};// 第i个物品的价值
+        int[] w = new int[]{1, 3, 4};    // 第i个物品的重量
+        int bag = 4;                       // 背包的容量
 
-    /**
-     * 动态规划获得结果
-     * @param weight  物品的重量
-     * @param value   物品的价值
-     * @param bagSize 背包的容量
-     */
-    public static void testWeightBagProblem(int[] weight, int[] value, int bagSize){
-
-        // 创建dp数组
-        int goods = weight.length;  // 获取物品的数量
-        int[][] dp = new int[goods][bagSize + 1];
-
-        // 初始化dp数组
-        // 创建数组后，其中默认的值就是0
-        for (int j = weight[0]; j <= bagSize; j++) {
-            dp[0][j] = value[0];
-        }
-
-        // 填充dp数组
-        for (int i = 1; i < weight.length; i++) {
-            for (int j = 1; j <= bagSize; j++) {
-                if (j < weight[i]) {
-                    /**
-                     * 当前背包的容量都没有当前物品i大的时候，是不放物品i的
-                     * 那么前i-1个物品能放下的最大价值就是当前情况的最大价值
-                     */
-                    dp[i][j] = dp[i-1][j];
-                } else {
-                    /**
-                     * 当前背包的容量可以放下物品i
-                     * 那么此时分两种情况：
-                     *    1、不放物品i
-                     *    2、放物品i
-                     * 比较这两种情况下，哪种背包中物品的最大价值最大
-                     */
-                    dp[i][j] = Math.max(dp[i-1][j] , dp[i-1][j-weight[i]] + value[i]);
-                }
+        int[] dp = new int[bag + 1]; // dp[i]表示当前背包容量为j的最大价值
+        dp[0] = 0;// 背包容量为0时，最大价值是0
+        for (int i = 0; i < 3; i++) {// 物品
+            for (int j = bag; j >= 1; j--) {// 背包容量、
+                // 需要倒序遍历背包容量。如果是顺序放入，那么根据dp转移方程：
+                // 第j个状态可能是由前面的第j-w[i]个状态转移过来。
+                // 如果顺序遍历，那么就会先算出前面的值，算出前面的值过后，后面dp转移的时候又可能会用到，
+                // 那么也就是说，一个物品被放入了多次。这就不是01背包问题了，而是完全背包
+                if (j >= w[i]) dp[j] = Math.max(dp[j], dp[j - w[i]] + v[i]);
             }
         }
 
-        // 打印dp数组
-        for (int i = 0; i < goods; i++) {
-            for (int j = 0; j <= bagSize; j++) {
-                System.out.print(dp[i][j] + "\t");
-            }
-            System.out.println("\n");
-        }
+        System.out.println(dp[bag]);
     }
 }

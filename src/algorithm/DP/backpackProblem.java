@@ -9,12 +9,12 @@ import java.util.Arrays;
  * */
 public class backpackProblem {
     public static void main(String[] args) {
-        int[] v = new int[]{10, 15, 20, 25};// 第i个物品的价值
-        int[] w = new int[]{3, 6, 4, 5};    // 第i个物品的重量
-        int bag = 10;                       // 背包的容量
+        int[] v = new int[]{15, 20, 30};// 第i个物品的价值
+        int[] w = new int[]{1, 3, 4};    // 第i个物品的重量
+        int bag = 4;                       // 背包的容量
 
         // 状态表示：dp[i][j]表示当前背包装有前i个物品，j重量的物品的最大价值（i、j从1开始）
-        int[][] dp = new int[5][bag+1];
+        int[][] dp = new int[4][bag+1];
         // 状态初始化: 取第0个物品时，能够装下背包容量大于第0个物品重量的价值为0
         // 所以已经初始化完毕
 
@@ -29,6 +29,6 @@ public class backpackProblem {
         }
 
         System.out.println("状态dp：" + Arrays.deepToString(dp));
-        System.out.println("最大价值：" + dp[4][10]);
+        System.out.println("最大价值：" + dp[3][4]);
     }
 }
